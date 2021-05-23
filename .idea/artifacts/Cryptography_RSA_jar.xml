@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Cryptography-RSA:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Cryptography_RSA_jar</output-path>
+    <root id="archive" name="Cryptography-RSA.jar">
+      <element id="module-output" name="Cryptography-RSA" />
+    </root>
+  </artifact>
+</component>
