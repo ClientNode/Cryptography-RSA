@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
@@ -18,8 +18,8 @@ public class RSA {
 
     BigInteger p, q, e;
     BigInteger n, z, d;
-    BigInteger messageEncrypted;
-    String messageDecrypted;
+    BigInteger lastEncryptedMessage;
+    String lastDecryptedMessage;
     boolean autoCopy;
 
     /**
@@ -61,7 +61,7 @@ public class RSA {
             while (config.hasNext()) {
                 if (config.hasNextBoolean()) {
                     String temp = config.nextLine();
-                    autoCopy = Boolean.valueOf(temp);
+                    autoCopy = Boolean.parseBoolean(temp);
                     break;
                 }
                 values.add(new BigInteger(config.nextLine(), 16));
@@ -106,8 +106,8 @@ public class RSA {
         System.out.println("Generating Keys, please wait...");
         try {
             //Delete history of messages
-            messageDecrypted = null;
-            messageEncrypted = null;
+            lastDecryptedMessage = null;
+            lastEncryptedMessage = null;
 
             //Generate P, Q, and E
             p = generatePrime(512, 8);
@@ -180,8 +180,10 @@ public class RSA {
         BigInteger encryptedMessage = encrypt(byteMessage);
 
         //Save a record of what was encrypted
-        messageEncrypted = encryptedMessage;
+        lastEncryptedMessage = encryptedMessage;
 
+        //BASE64 Encoded Encrypted Message
+        //System.out.println("Encrypted Message: " + Color.GREEN + Base64.getUrlEncoder().encodeToString(encryptedMessage.toByteArray()) + Color.RESET + "\n");
         System.out.println("Encrypted Message: " + Color.GREEN + encryptedMessage + Color.RESET + "\n");
 
         //Copy encrypted message to clipboard
@@ -209,11 +211,13 @@ public class RSA {
         System.out.print("Enter message to decrypt: ");
         String encryptedMessage = scan.nextLine();
 
+        //BASE64 DECODE
+        //BigInteger byteMessage = new BigInteger(Base64.getUrlDecoder().decode(encryptedMessage));
         BigInteger byteMessage = new BigInteger(encryptedMessage);
         BigInteger decryptedMessage = decrypt(byteMessage);
 
         //Save a record of what was decrypted
-        messageDecrypted = new String(decryptedMessage.toByteArray());
+        lastDecryptedMessage = new String(decryptedMessage.toByteArray());
 
         System.out.println("Decrypted Message: " + Color.GREEN + new String(decryptedMessage.toByteArray()) + Color.RESET + "\n");
     }

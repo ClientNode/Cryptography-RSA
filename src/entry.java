@@ -1,7 +1,3 @@
-import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
-import java.math.BigInteger;
 import java.util.Scanner;
 
 /**
@@ -78,8 +74,8 @@ public class entry {
      * Get the last encrypted value and decrypted value the user entered
      */
     static void getHistory(RSA rsa) {
-        System.out.println("\nLast Message Encrypted: " + rsa.messageEncrypted);
-        System.out.println("Last Message Decrypted: " + rsa.messageDecrypted + "\n");
+        System.out.println("\nLast Message Encrypted: " + rsa.lastEncryptedMessage);
+        System.out.println("Last Message Decrypted: " + rsa.lastDecryptedMessage + "\n");
     }
 
 }
